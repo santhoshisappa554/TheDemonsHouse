@@ -46,6 +46,7 @@ public class GunController : MonoBehaviour
                     audioSource.Play();
                     bullets--;
                     bulletsText.text = "Bullets: " + bullets;
+                    
                 }
                 else
                 {

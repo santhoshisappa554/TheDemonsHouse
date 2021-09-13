@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         //enemydeathCount = enemydeathCount + EnemyShoot.instance.enemySpawnCount;
+       
     }
 
     // Update is called once per frame
@@ -75,13 +76,18 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene(6);
         }
-        if (time == 20.0f)
+        if (time >= 30.0f)
         {
-            key.SetActive(true);
+            //Instantiate(key, transform.position, Quaternion.identity);
             hintText.text = "Get the key";
-            SceneManager.LoadScene(7);
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                SceneManager.LoadScene(7);
+            }
+           
         }
-       
+
+
     }
 
 
