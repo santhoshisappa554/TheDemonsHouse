@@ -46,10 +46,14 @@ public class GunController : MonoBehaviour
                     audioSource.Play();
                     bullets--;
                     bulletsText.text = "Bullets: " + bullets;
-                    
+                    anim.SetFloat("MoveX", 1.0f);
+                    anim.SetFloat("MoveZ", 0.0f);
+
                 }
                 else
                 {
+                    anim.SetFloat("MoveX", 0.0f);
+                    anim.SetFloat("MoveZ", 0.0f);
                     bulletEffect.SetActive(false);
                 }
                 
@@ -73,9 +77,9 @@ public class GunController : MonoBehaviour
 
         bulletEffect.SetActive(true);
 
-        anim.SetFloat("Blend", -1.0f);
-        Debug.DrawRay(FirePoint.transform.position, FirePoint.transform.forward * 50.0f, Color.blue, 1.0f);
-        Ray ray = new Ray(FirePoint.transform.position, FirePoint.transform.forward);
+       
+        Debug.DrawRay(FirePoint.transform.position, FirePoint.transform.right * 50.0f, Color.blue, 1.0f);
+        Ray ray = new Ray(FirePoint.transform.position, FirePoint.transform.right);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 10))
         {

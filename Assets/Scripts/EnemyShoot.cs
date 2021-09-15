@@ -38,9 +38,13 @@ public class EnemyShoot : MonoBehaviour
         if (health <= 0)
         {
 
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
+            
+            //anim.SetFloat("Blend", 1.0f);
             deatheffect.SetActive(true);
-          
+            Destroy(this.gameObject,0.5f);
+
+
         }
         else
         {
@@ -54,7 +58,7 @@ public class EnemyShoot : MonoBehaviour
     {
         transform.LookAt(player.transform.position);
         Debug.DrawRay(FirePoint.transform.position, FirePoint.transform.forward * 5.0f, Color.red, Time.deltaTime-10.0f);
-        Ray ray = new Ray(FirePoint.transform.position, FirePoint.transform.forward);
+        Ray ray = new Ray(FirePoint.transform.position-new Vector3(0,0.5f,0), FirePoint.transform.forward);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 5))
         {

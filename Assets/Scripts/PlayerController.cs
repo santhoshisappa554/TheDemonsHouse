@@ -24,9 +24,10 @@ public class PlayerController : MonoBehaviour
     public Text healthText;
     public static PlayerController instance;
     public int enemydeathCount=0;
-    public GameObject key;
+    public GameObject KeyEffect;
     public Text hintText;
     float time = 0;
+
     private void Awake()
     {
         instance = this;
@@ -44,27 +45,55 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      
+     
         time = time + Time.deltaTime;
-        print(time);
+        //print(time);
         var horizontal = Input.GetAxis("Horizontal");
         var vertical = Input.GetAxis("Vertical");
         var horiMove = transform.right * horizontal;
         var verMove = transform.forward * vertical;
         moveinput = horiMove + verMove;
         moveinput *= moveSpeed;
-      
-            anim.SetFloat("Blend", horizontal);
-        anim.SetFloat("Blend",vertical);
+        print(moveinput.z);
+        if (moveinput.x > 0.2f)
+        {
+            anim.SetFloat("MoveX",-1.0f);
+            anim.SetFloat("Movez",1.0f);
+        }
+       else if (moveinput.x < -0.1f)
+        {
+            anim.SetFloat("MoveX", 1.0f);
+            anim.SetFloat("MoveZ", 0.0f);
+        }
+
+        else if (moveinput.z > 0.01f)
+        {
+            anim.SetFloat("MoveX", 0.0f);
+            anim.SetFloat("MoveZ", 1.0f);
+        }
+        else if (moveinput.z < -0.01f)
+        {
+            anim.SetFloat("MoveX", 1.0f);
+            anim.SetFloat("MoveZ", 1.0f);
+        }
+
+        else
+        {
+            anim.SetFloat("MoveX", 0);
+            anim.SetFloat("MoveZ", 0);
+           
+        }
 
         moveinput.y += Physics.gravity.y * gravity * Time.deltaTime;
 
         character.Move(moveinput * Time.deltaTime);
+        print(moveinput.x);
         //camera rotation using mouseinput
         mouseInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")) * mouseSenstivity;
         if (invertX)
         {
             mouseInput.x = -mouseInput.x;
+          
         }
         if (invertY)
         {
@@ -75,13 +104,17 @@ public class PlayerController : MonoBehaviour
         if (health <= 0)
         {
             SceneManager.LoadScene(6);
+
         }
         if (time >= 30.0f)
         {
-            //Instantiate(key, transform.position, Quaternion.identity);
-            hintText.text = "Get the key";
+            
+                //Instantiate(key, transform.position, Quaternion.identity);
+                hintText.text = "Get the key";
+            KeyEffect.SetActive(true);
             if (Input.GetKeyDown(KeyCode.K))
-            {
+                {
+
                 SceneManager.LoadScene(7);
             }
            
@@ -108,5 +141,6 @@ public class PlayerController : MonoBehaviour
             SceneManager.LoadScene(7);
         }
     }
+   
 
 }
